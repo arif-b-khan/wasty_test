@@ -52,7 +52,7 @@ function Todos(props) {
   if (error || postError || deleteError || updateError) throw todoError;
   counter = counter + 1;
   console.log(counter);
-
+  todos = todos.sort((a, b) => a.isFav - b.isFav);
   const PagedTodo = withPagination(ListGroup, todos);
 
   function invalidateTodos() {
