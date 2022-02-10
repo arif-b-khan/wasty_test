@@ -1,19 +1,14 @@
-FROM node:alpine as appbuild
+FROM node:latest as wastyclient
+RUN apt-get update -qq && apt-get install -y build-essential
 WORKDIR /app
 COPY package.json .
-RUN npm install
-ENV PATH /app/node_modules/.bin:$PATH
-COPY /src .
-RUN npm build
+COPY run.sh .
+COPY /build /app/build
+COPY /api-mock-server /app/api-mock-server
+COPY /node_modules /app/node_modules
+RUN npm install -g serve
+EXPOSE 3000
+EXPOSE 3001
+RUN chmod 777 ./run.sh
+CMD "./run.sh"
 
-#### stage 2 
-# FROM node:0.12 as wastytodo
-# WORKDIR /app
-# RUN npm install -g serve
-# COPY --from=appbuild /app/build .
-# COPY /api-mock-server .
-# COPY .env .
-# COPY /package.json .
-# EXPOSE 3000
-# ENTRYPOINT [ "serve" ]
-# RUN serve -s build && npm run server-start
