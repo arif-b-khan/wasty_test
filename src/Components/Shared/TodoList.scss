@@ -1,0 +1,12 @@
+.todo {
+  text-align: left;
+}
+
+.todo-float-right{
+  text-align: right;
+}
+
+.todo-float-right,
+a:nth-child(2) {
+  margin-left: 10px;
+}
